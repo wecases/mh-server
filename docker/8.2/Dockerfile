@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-LABEL maintainer="Taylor Otwell"
+LABEL maintainer="Waset"
 
 ARG WWWGROUP
 ARG NODE_VERSION=18
@@ -9,7 +9,7 @@ ARG POSTGRES_VERSION=14
 WORKDIR /var/www/html
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV TZ=UTC
+ENV TZ=UTC+8
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -42,6 +42,8 @@ RUN apt-get update \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN curl -fSsL https://repo.fig.io/scripts/install-headless.sh | bash
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.2
 

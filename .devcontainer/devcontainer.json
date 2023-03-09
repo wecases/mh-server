@@ -1,26 +1,36 @@
 // https://aka.ms/devcontainer.json
 {
-	"name": "Existing Docker Compose (Extend)",
+	"name": "Laravel9",
 	"dockerComposeFile": [
 		"../docker-compose.yml"
 	],
+	"runArgs": ["-v", "${localEnv:SSH_AUTH_SOCK}:/ssh-agent"],
 	"service": "laravel.test",
 	"workspaceFolder": "/var/www/html",
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				// "mikestead.dotenv",
-				// "amiralizadeh9480.laravel-extra-intellisense",
-				// "ryannaddy.laravel-artisan",
-				// "onecentlin.laravel5-snippets",
-				// "onecentlin.laravel-blade"
+				"AMiner.codegeex",
+				"vivaxy.vscode-conventional-commits",
+				"withfig.fig",
+				"GitHub.vscode-pull-request-github",
+				"eamodio.gitlens",
+				"DEVSENSE.phptools-vscode",
+				"IronGeek.vscode-env",
+				"amiralizadeh9480.laravel-extra-intellisense"
 			],
 			"settings": {}
 		}
 	},
 	"remoteUser": "sail",
-	"postCreateCommand": "chown -R 1000:1000 /var/www/html"
+	"postCreateCommand": "chown -R 1000:1000 /var/www/html",
 	// "forwardPorts": [],
 	// "runServices": [],
 	// "shutdownAction": "none",
+	"mounts": [
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/root/.gitconfig,type=bind"
+	],
+	"remoteEnv": {
+		"SSH_AUTH_SOCK": "/ssh-agent"
+	}
 }
