@@ -43,6 +43,24 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
+        /**
+         * api接口统一错误处理
+         */
+        $this->renderable(function (\Exception $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'code'    => $e->getCode(),
+                    'message' => $e->getMessage(),
+                    'file'    =>
+                        $e->getFile()?: '',
+                    'line'    =>
+                        $e->getLine()?: '',
+                    'trace'   =>
+                        $e->getTrace()?: '',
+                ], $e->getCode()?: 500);
+            }
+        });
+
         $this->reportable(function (Throwable $e) {
             //
         });
